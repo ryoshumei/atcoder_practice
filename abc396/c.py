@@ -19,15 +19,13 @@ def solve():
     # Step 3: 枚举白球数量
     max_value = 0
 
-    white_sum_list = []
-    white_sum_list.append(0)
-    black_sum_list = []
-    black_sum_list.append(0)
+    white_sum_list = [0]
+    black_sum_list = [0]
 
-    for w in range(1,m + 1):
-        white_sum_list.append(white_sum_list[w - 1] + white[w - 1])
-    for n in range(1,n + 1):
-        black_sum_list.append(black_sum_list[n - 1] + black[n - 1])
+    for w in white:
+        white_sum_list.append(white_sum_list[-1] + w)
+    for b in black:
+        black_sum_list.append(black_sum_list[-1] + b)
 
     # w means how many white balls we select
     for w in range(min(m, n) + 1):
@@ -37,11 +35,10 @@ def solve():
         if positive_black_count < w:
             value = white_sum + black_sum_list[w]
         else:
-            value = positive_black_sum + white_sum
+            value = white_sum + positive_black_sum
 
-        # 提示：需要考虑positive_black_count和w的关系
         # 更新max_value
         if value > max_value:
-            max_value = value
+            max_value = max(value, max_value)
     return max_value
 print(solve())
